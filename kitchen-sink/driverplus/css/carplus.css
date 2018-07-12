@@ -1,0 +1,11 @@
+.md .block .block-footer, .md .card .block-footer, .md .list .block-footer, .md .timeline .block-footer {
+	/*clear: both;*/
+	/*margin: 0 auto;*/
+	color: green !important;
+}
+
+.md .button.button-active, .md .button.button-fill, .md .button.button-fill-md, .md .button.tab-link-active, .item-content .item-input {
+	background-color: green !important;
+	/*width: 50% !important;*/
+	
+}

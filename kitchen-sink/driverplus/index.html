@@ -1,0 +1,153 @@
+
+<!DOCTYPE html>
+<html>
+   
+   <head>
+      <meta name = "viewport" content = "width = device-width, initial-scale = 1, 
+         maximum-scale = 1, minimum-scale = 1, user-scalable = no, minimal-ui" />
+      <meta name = "apple-mobile-web-app-capable" content = "yes" />
+      <meta name = "apple-mobile-web-app-status-bar-style" content = "black" />
+      <title>My App</title>
+     <link rel="stylesheet" href="css/carplus.css">
+      <link rel="stylesheet" href="../../packages/core/css/framework7.min.css">
+     <link rel="stylesheet" href="css/app.css">
+     <link rel="apple-touch-icon" href="img/f7-icon-square.png">
+     <link rel="icon" href="img/f7-icon.png">
+      <!-- <link rel = "stylesheet" 
+         href = "https://cdnjs.cloudflare.com/ajax/libs/framework7/1.4.2/css/framework7.ios.min.css" />
+      <link rel = "stylesheet" 
+         href = "https://cdnjs.cloudflare.com/ajax/libs/framework7/1.4.2/css/framework7.ios.colors.min.css" /> -->
+   </head>
+   
+   <body>
+        <div class="page no-toolbar no-navbar no-swipeback">
+          <div class="page-content login-screen-content">
+            <div class="login-screen-title">Framework7</div>
+            <form style="color: green;">
+              <div class="list">
+                <ul>
+                  <li class="item-content item-input item-input-with-value">
+                    <div class="item-inner">
+                      <div class="item-title item-label">Correo:</div>
+                      <div class="item-input-wrap">
+                        <input type="text" placeholder="Ingrese su correo" id="demo-username-2" class="input-with-value">
+                        <!-- <span class="input-clear-button"></span> -->
+                      </div>
+                    </div>
+                  </li>
+                  <li class="item-content item-input">
+                    <div class="item-inner">
+                      <div class="item-title item-label">Clave:</div>
+                      <div class="item-input-wrap">
+                        <input type="password" placeholder="Ingrese su clave" id="demo-password-2" class="">
+                      </div>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+              <div class="list">
+                <ul>
+                  <li><a href="#" id="login" class="col button button-fill">Iniciar sesion</a></li>
+                </ul>
+                <div class="block-footer">Olvide mi contraseña<br>Quiero registrarme</div>
+              </div>
+            </form>
+          </div>
+        </div>
+      <script src="../../packages/core/js/framework7.min.js"></script>
+      <!-- <script src="js/routes.js"></script> -->
+      <!-- <script src="js/app.js"></script> -->
+         <script>
+            var $ = Dom7;
+
+            // Theme
+            var theme = 'auto';
+            if (document.location.search.indexOf('theme=') >= 0) {
+              theme = document.location.search.split('theme=')[1].split('&')[0];
+            }
+
+            // Init App
+            var app = new Framework7({
+              id: 'io.framework7.testapp',
+              root: '#app',
+              theme: theme,
+              data: function () {
+                return {
+                  user: {
+                    firstName: 'John',
+                    lastName: 'Doe',
+                  },
+                };
+              },
+              methods: {
+                helloWorld: function () {
+                  app.dialog.alert('Hello World!');
+                },
+                signIn: function () {
+                  let data = {
+                    email: $('input#demo-username-2').val(),
+                    pass: $('input#demo-password-2').val()
+                  };
+
+                  Framework7.request.get('http://localhost:3080/api/clientsF',data, function (data) {
+                    console.log(data);
+                    if (data == true) {
+                       app.dialog.alert('Bienvenido', function () {
+                         app.loginScreen.close();
+                         // router.back();
+                       })
+                    }else{
+                      app.dialog.alert('Usuario y clave incorrectos', function () {
+                         app.loginScreen.close();
+                         // router.back();
+                      })
+                    }
+                  });
+                 // var $ = this.$;
+                 // var app = this.$app;
+                 // var router = this.$router;
+                 // var username = $('input#demo-username-2').val();
+                 // var password = $('input#demo-password-2').val();
+               }
+              },
+              // routes: routes,
+              vi: {
+                placementId: 'pltd4o7ibb9rc653x14',
+              },
+            });
+
+            $('#login').on('click',function(){
+               // console.log(app.methods.signIn);
+               app.methods.signIn();
+            })
+         </script>
+      <script>
+         // here initialize the app
+         // var myApp = new Framework7();
+
+         // If your using custom DOM library, then save it to $$ variable
+         // var $$ = Dom7;
+
+         // Add the view
+         // var mainView = myApp.addView('.view-main', {
+            
+         //    // enable the dynamic navbar for this view:
+         //    dynamicNavbar: true
+         // });
+
+         //use the 'pageInit' event handler for all pages
+         // $$(document).on('charge', function (e) {
+            // console.log('tacta');
+            //get page data from event data
+            // var page = e.detail.page;
+
+            // if (page.name === 'blog') {
+            
+               // you will get below message in alert box when page with data-page attribute is equal to "about"
+               // myApp.alert('Here its your About page');
+            // }
+         // })
+      </script>
+   </body>
+
+</html>
